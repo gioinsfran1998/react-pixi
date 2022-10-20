@@ -1,16 +1,40 @@
+import { useAnimation } from 'framer-motion';
 import React from 'react';
-import Whell from '../shared/Whell';
+import Pixi from '../shared/Pixi';
 import * as S from './style';
 
 const Game = () => {
-	// const [scale, setScale] = useState(1);
+	const [spin, setSpin] = React.useState(false);
+	const wrapperPixiAnimation = useAnimation();
+
+	const handleSpin = async () => {
+		setSpin(true);
+
+		await wrapperPixiAnimation.start({
+			rotate: -1080,
+			transition: {
+				duration: 18,
+				ease: [0.33, 1, 0.68, 1]
+			}
+		});
+
+		await wrapperPixiAnimation.start({
+			rotate: 0,
+			transition: {
+				duration: 2,
+				ease: [0.33, 1, 0.68, 1]
+			}
+		});
+
+		setSpin(false);
+	};
+
 	return (
 		<S.Wrapper>
-			<Whell />
-			{/* <S.Options>
-				<button onClick={() => setScale((prev) => prev - 0.1)}>Scale -</button>
-				<button onClick={() => setScale((prev) => prev + 0.1)}>Scale +</button>
-			</S.Options> */}
+			<button onClick={handleSpin}>Rodar</button>
+			<S.WrapperPixi animate={wrapperPixiAnimation}>
+				<Pixi spin={spin} />
+			</S.WrapperPixi>
 		</S.Wrapper>
 	);
 };
