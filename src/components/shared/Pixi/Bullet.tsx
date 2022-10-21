@@ -1,10 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Sprite, useTick } from '@inlet/react-pixi';
 import React, { FC, useRef, useState } from 'react';
 
-// const i = 0;
+// valor base
+// 0.78;
+
+// para mover 1 posicion
+// 0.17
+
+// baseValue + (numbersPositions[32] * 0.17)
+
+const numbersPositions: any = {
+	0: 0,
+	32: 1,
+	22: 28
+};
+
+const SPEED_DECREASING = 0.0002;
+const SPEED_INCREASING = 0.01;
+
 const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 	const spriteRef = useRef(null);
 	const [rotation, setRotation] = useState(0.0);
+	const [rotationDecreasing, setRotationDecreasing] = useState(0.1);
+	const [input, _] = useState('32');
 
 	const [anchor, setAnchor] = useState(5.5);
 	const [x, setX] = useState(200);
@@ -18,35 +37,12 @@ const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 			return;
 		}
 
-		if (anchor >= 3.8) setAnchor((prev) => prev - 0.01 * delta);
+		if (rotationDecreasing <= 0.0) return;
 
-		if (rotation >= 27.3) {
-			return setRotation((prev) => prev + 0.0 * delta);
-		}
+		if (anchor >= 3.8) setAnchor((prev) => prev - SPEED_INCREASING * delta);
 
-		if (rotation >= 26) {
-			return setRotation((prev) => prev + 0.03 * delta);
-		}
-
-		if (rotation >= 25) {
-			return setRotation((prev) => prev + 0.05 * delta);
-		}
-
-		if (rotation >= 20) {
-			return setRotation((prev) => prev + 0.07 * delta);
-		}
-
-		if (rotation >= 10) {
-			return setRotation((prev) => prev + 0.09 * delta);
-		}
-
-		setRotation((prev) => prev + 0.1 * delta);
-
-		// if (y >= 100) {
-		// 	setDy(-10 * delta);
-		// }
-		// setDy((prev) => prev + 0.5 * delta);
-		// setY((prev) => prev + dy * delta);
+		setRotationDecreasing((prev) => prev - SPEED_DECREASING * delta);
+		setRotation((prev) => prev + rotationDecreasing * delta);
 	});
 
 	return (

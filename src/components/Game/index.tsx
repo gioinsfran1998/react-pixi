@@ -9,7 +9,6 @@ const Game = () => {
 
 	const handleSpin = async () => {
 		setSpin(true);
-
 		await wrapperPixiAnimation.start({
 			rotate: -1080,
 			transition: {
@@ -17,7 +16,6 @@ const Game = () => {
 				ease: [0.33, 1, 0.68, 1]
 			}
 		});
-
 		await wrapperPixiAnimation.start({
 			rotate: 0,
 			transition: {
@@ -25,7 +23,6 @@ const Game = () => {
 				ease: [0.33, 1, 0.68, 1]
 			}
 		});
-
 		setSpin(false);
 	};
 
