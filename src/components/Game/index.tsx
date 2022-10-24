@@ -1,14 +1,28 @@
 import { useAnimation } from 'framer-motion';
 import React from 'react';
+import { useStore } from '../../store/store';
 import Pixi from '../shared/Pixi';
+import Board from './Board';
 import * as S from './style';
+import shallow from 'zustand/shallow';
+import Form from './Form';
 
 const Game = () => {
-	const [spin, setSpin] = React.useState(false);
+	const [isPinRotate, setPinRotate] = useStore(
+		(state) => [state.isPinRotate, state.setPinRotate],
+		shallow
+	);
 	const wrapperPixiAnimation = useAnimation();
 
 	const handleSpin = async () => {
-		setSpin(true);
+		await wrapperPixiAnimation.start({
+			translateY: 0,
+			transition: {
+				duration: 1,
+				ease: [0.5, 1, 0.68, 1]
+			}
+		});
+		setPinRotate(true);
 		await wrapperPixiAnimation.start({
 			rotate: -1080,
 			transition: {
@@ -23,15 +37,27 @@ const Game = () => {
 				ease: [0.33, 1, 0.68, 1]
 			}
 		});
-		setSpin(false);
+		await wrapperPixiAnimation.start({
+			translateY: -1000,
+			transition: {
+				duration: 2,
+				ease: [0.5, 1, 0.68, 1]
+			}
+		});
+		setPinRotate(false);
 	};
 
 	return (
 		<S.Wrapper>
-			<button onClick={handleSpin}>Rodar</button>
-			<S.WrapperPixi animate={wrapperPixiAnimation}>
-				<Pixi spin={spin} />
+			<S.WrapperPixi
+				initial={{ translateY: -1000 }}
+				animate={wrapperPixiAnimation}
+			>
+				<Pixi spin={isPinRotate} />
 			</S.WrapperPixi>
+
+			<Board />
+			<Form handleSpin={handleSpin} />
 		</S.Wrapper>
 	);
 };
