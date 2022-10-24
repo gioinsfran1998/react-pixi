@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Sprite, useTick } from '@inlet/react-pixi';
+
+import { Sprite, useTick } from '@inlet/react-pixi/legacy';
 import React, { FC, useRef, useState } from 'react';
 
 // valor base

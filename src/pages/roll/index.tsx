@@ -1,5 +1,7 @@
 import { NextPage } from 'next';
-import Game from '../../components/Game';
+import dynamic from 'next/dynamic';
+
+const Game = dynamic(() => import('../../components/Game'), { ssr: false });
 
 const Roll: NextPage = () => {
 	return <Game />;

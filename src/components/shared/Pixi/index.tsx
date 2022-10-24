@@ -1,20 +1,21 @@
 import React, { FC } from 'react';
 
-import { Stage } from '@inlet/react-pixi';
+import { Stage } from '@inlet/react-pixi/legacy';
 
 import Wheel from './Wheel';
 import Bullet from './Bullet';
 
-const Whell: FC<{ spin: boolean }> = ({ spin }) => {
+const Pixi: FC<{ spin: boolean }> = ({ spin }) => {
 	return (
 		<Stage
 			width={400}
 			height={400}
 			options={{
 				autoDensity: true,
+				backgroundAlpha: 0,
 				backgroundColor: 0x00000,
 				antialias: true,
-				transparent: true
+				forceCanvas: true
 			}}
 		>
 			<Wheel />
@@ -23,4 +24,4 @@ const Whell: FC<{ spin: boolean }> = ({ spin }) => {
 	);
 };
 
-export default Whell;
+export default Pixi;
