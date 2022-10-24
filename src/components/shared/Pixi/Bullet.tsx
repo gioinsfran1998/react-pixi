@@ -24,12 +24,15 @@ const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 	const spriteRef = useRef(null);
 	const [rotation, setRotation] = useState(0.0);
 	const [rotationDecreasing, setRotationDecreasing] = useState(0.1);
+	const [levelJump, setLevelJumpBall] = useState(0);
+
 	const [input, _] = useState('32');
 
 	const [anchor, setAnchor] = useState(5.5);
+
 	const [x, setX] = useState(200);
 	const [y, setY] = useState(200);
-	const [dy, setDy] = useState(-10);
+	const [dy, setDy] = useState(-0.3);
 
 	useTick((delta) => {
 		if (!spin) {
@@ -40,7 +43,29 @@ const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 
 		if (rotationDecreasing <= 0.0) return;
 
-		if (anchor >= 3.8) setAnchor((prev) => prev - SPEED_INCREASING * delta);
+		if (anchor >= 3.8) {
+			setDy(-0.05 * delta);
+		}
+
+		if (levelJump === 1) {
+			setDy((prev) => prev + 0.01 * delta);
+			setAnchor((prev) => prev + dy * delta);
+		} else if (levelJump === 2) {
+			setDy((prev) => prev + 0.005 * delta);
+			setAnchor((prev) => prev + dy * delta);
+		}
+
+		if (anchor > 3 && anchor < 3.4) {
+			setLevelJumpBall(1);
+		}
+
+		if (anchor > 3.4 && anchor < 3.8) {
+			setLevelJumpBall(2);
+		}
+
+		if (anchor >= 3.8) {
+			setAnchor((prev) => prev - SPEED_INCREASING * delta);
+		}
 
 		setRotationDecreasing((prev) => prev - SPEED_DECREASING * delta);
 		setRotation((prev) => prev + rotationDecreasing * delta);
