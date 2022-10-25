@@ -9,13 +9,20 @@ import shallow from 'zustand/shallow';
 import Form from './Form';
 
 import * as S from './style';
+// import useSound from 'use-sound';
 
 const Game = () => {
+	// const [soundRollingBall, setSoundRollingBall] = useState(0);
 	const [isPinRotate, setPinRotate, input] = useStore(
 		(state) => [state.isPinRotate, state.setPinRotate, state.input],
 		shallow
 	);
 	const wrapperPixiAnimation = useAnimation();
+
+	// const [soundRolling] = useSound('/rolling-ball.mp3', {
+	// 	loop: true,
+	// 	volume: soundRollingBall
+	// });
 
 	const handleSpin = async () => {
 		await wrapperPixiAnimation.start({
@@ -26,6 +33,7 @@ const Game = () => {
 			}
 		});
 		setPinRotate(true);
+
 		await wrapperPixiAnimation.start({
 			rotate: -1080,
 			transition: {
@@ -40,6 +48,7 @@ const Game = () => {
 				ease: [0.33, 1, 0.68, 1]
 			}
 		});
+
 		await wrapperPixiAnimation.start({
 			translateY: -1000,
 			transition: {
