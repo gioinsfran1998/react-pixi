@@ -11,8 +11,8 @@ import Form from './Form';
 import * as S from './style';
 
 const Game = () => {
-	const [isPinRotate, setPinRotate] = useStore(
-		(state) => [state.isPinRotate, state.setPinRotate, state.setInput],
+	const [isPinRotate, setPinRotate, input] = useStore(
+		(state) => [state.isPinRotate, state.setPinRotate, state.input],
 		shallow
 	);
 	const wrapperPixiAnimation = useAnimation();
@@ -56,7 +56,7 @@ const Game = () => {
 				initial={{ translateY: -1000 }}
 				animate={wrapperPixiAnimation}
 			>
-				<Pixi spin={isPinRotate} />
+				<Pixi spin={isPinRotate} input={input} />
 			</S.WrapperPixi>
 
 			<Board />

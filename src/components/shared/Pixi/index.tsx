@@ -5,7 +5,7 @@ import { Stage } from '@inlet/react-pixi/legacy';
 import Wheel from './Wheel';
 import Bullet from './Bullet';
 
-const Pixi: FC<{ spin: boolean }> = ({ spin }) => {
+const Pixi: FC<{ spin: boolean; input: number }> = ({ spin, input }) => {
 	return (
 		<Stage
 			width={400}
@@ -19,7 +19,7 @@ const Pixi: FC<{ spin: boolean }> = ({ spin }) => {
 			}}
 		>
 			<Wheel />
-			<Bullet spin={spin} />
+			<Bullet spin={spin} input={input} />
 		</Stage>
 	);
 };

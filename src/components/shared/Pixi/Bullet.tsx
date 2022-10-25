@@ -57,7 +57,7 @@ const MOVE_DISTANCE = 0.0000005;
 const SPEED_DECREASING = 0.00013;
 const SPEED_INCREASING = 0.01;
 
-const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
+const Bullet: FC<{ spin: boolean; input: number }> = ({ spin, input }) => {
 	const spriteRef = useRef(null);
 	const [rotation, setRotation] = useState(0.0);
 	const [rotationDecreasing, setRotationDecreasing] = useState(0.1);
@@ -70,11 +70,13 @@ const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 	const [dy, setDy] = useState(-0.3);
 
 	useTick((delta) => {
-		// if (!spin) {
-		// 	setRotation(0.0);
-		// 	setAnchor(5.5);
-		// 	return;
-		// }
+		if (!spin) {
+			setRotation(0.0);
+			setAnchor(5.5);
+			setRotationDecreasing(0.1);
+			setLevelJumpBall(0);
+			return;
+		}
 
 		if (rotationDecreasing <= 0.0) return;
 
@@ -105,12 +107,12 @@ const Bullet: FC<{ spin: boolean }> = ({ spin }) => {
 		setRotationDecreasing(
 			(prev) =>
 				prev -
-				(SPEED_DECREASING -
-					numbersPositions[useStore.getState().input] * MOVE_DISTANCE) *
-					delta
+				(SPEED_DECREASING - numbersPositions[input] * MOVE_DISTANCE) * delta
 		);
 		setRotation((prev) => prev + rotationDecreasing * delta);
 	});
+
+	console.log(spin);
 
 	return (
 		<Sprite
