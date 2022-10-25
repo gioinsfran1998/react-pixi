@@ -1,15 +1,18 @@
-import { useAnimation } from 'framer-motion';
 import React from 'react';
+
 import { useStore } from '../../store/store';
+import { useAnimation } from 'framer-motion';
+
 import Pixi from '../shared/Pixi';
 import Board from './Board';
-import * as S from './style';
 import shallow from 'zustand/shallow';
 import Form from './Form';
 
+import * as S from './style';
+
 const Game = () => {
 	const [isPinRotate, setPinRotate] = useStore(
-		(state) => [state.isPinRotate, state.setPinRotate],
+		(state) => [state.isPinRotate, state.setPinRotate, state.setInput],
 		shallow
 	);
 	const wrapperPixiAnimation = useAnimation();
